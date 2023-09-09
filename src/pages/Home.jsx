@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import Mybutton from "../components/myButton";
+import Mybtn from "../components/Mybtn";
 import {getCookie, deleteAllCookies, callApi, logOut, refreshToken} from '../utils/Apiutil'
 
 function Home(userName){
@@ -54,9 +54,9 @@ function Home(userName){
             <div className="max-w-md w-full m-auto bg-white p-8">
                 <h1 className="text-4xl font-bold text-center py-4">Home</h1>
                 <p className="text-lg">Hello {email}</p>
-                <Mybutton onClick={handleCallApi}>Gọi API</Mybutton>
+                <Mybtn onClick={handleCallApi}>Gọi API</Mybtn>
                 <div className="min-h-[150px] text-5xl flex justify-center items-center" id="renderMessage"></div>
-                <Mybutton onClick={signOutHandle}>LOG OUT</Mybutton>
+                <Mybtn onClick={signOutHandle}>LOG OUT</Mybtn>
             </div>
         </div>
     )

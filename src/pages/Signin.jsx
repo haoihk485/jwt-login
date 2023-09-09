@@ -1,7 +1,7 @@
 import React, { useState  } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import Mybutton from "../components/Mybutton"
+import Mybtn from "../components/Mybtn"
 import Myinput from "../components/Myinput";
 import Alertp from "../components/Alertp";
 import {logIn} from "../utils/Apiutil"
@@ -32,7 +32,7 @@ function Signin(){
                 <Alertp id = "emailAlert"></Alertp>
                 <Myinput value = {password} onChange={(e) => setPassword(e.target.value)} type="password">Password:</Myinput>
                 <Alertp id = "passwordAlert"></Alertp>
-                <Mybutton onClick = {handleSignIn}>Sign in</Mybutton>
+                <Mybtn onClick = {handleSignIn}>Sign in</Mybtn>
                 <div className="text-center">
                     <p>New user? <Link to="/signup" className="text-teal-300 font-bold">Sign up</Link></p>
                 </div>

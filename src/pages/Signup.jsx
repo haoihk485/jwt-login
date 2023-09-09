@@ -3,7 +3,7 @@ import validator from "validator";
 import { useNavigate } from "react-router-dom";
 
 import {register} from "../utils/Apiutil"
-import Mybutton from "../components/myButton";
+import Mybtn from "../components/Mybtn"
 import Myinput from "../components/Myinput";
 import Alertp from "../components/Alertp";
 
@@ -43,7 +43,7 @@ function Signup(){
                 <Myinput value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} type="password" id="rePassword">
                     Confirm password:</Myinput>
                 <Alertp id = "repasswordAlert"></Alertp>
-                <Mybutton onClick={handleSignUp}>Sign up</Mybutton>
+                <Mybtn onClick={handleSignUp}>Sign up</Mybtn>
             </div>
         </div>
     )
