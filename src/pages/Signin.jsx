@@ -19,6 +19,7 @@ function Signin(){
             if (data.success){
                 document.cookie = `userEmail = ${data.data.email}`
                 document.cookie = `userToken = ${data.data.token}`
+                console.log(document.cookie)
                 navigate('/home')
             }            
         })

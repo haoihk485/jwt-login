@@ -1,6 +1,8 @@
-import React, { Children } from "react";
+import React, { Children, useEffect } from "react";
 
-function Myinput ( {value, onChange, type, children}){
+function Myinput ( {value, type, onChange, onBlur, children}){
+    
+
     return(
         <div className="flex flex-col py-2">
             <label>{children}</label>
@@ -9,6 +11,7 @@ function Myinput ( {value, onChange, type, children}){
                 onChange={onChange}
                 className="border p-2"
                 type={type}
+                onBlur={onBlur}
             />
         </div>
     )
