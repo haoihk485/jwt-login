@@ -39,14 +39,13 @@ export function callApi(token){
         .catch(error=>alert(error))
 }
 
-export function logOut(token){
+export function logOut(){
     const url = 'https://auth-server-fmp.vercel.app/auth/logout'
     const option ={
         method: 'POST',
         credentials: "include",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization':`${token}`,
           }
     }
     return fetch (url, option)
@@ -109,4 +108,8 @@ export function register(email, fullName, password){
         .then(response => response.json())
         .then(info => info)
         .catch(error => console.log(error))
+}
+
+export function deleteCookie(cookieName) {
+    document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }

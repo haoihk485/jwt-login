@@ -1,53 +1,62 @@
-import React, { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navigate, json, useNavigate } from "react-router-dom";
 import Mybtn from "../components/Mybtn";
-import {getCookie, deleteAllCookies, callApi, logOut, refreshToken} from '../utils/Apiutil'
+import {getCookie, deleteAllCookies, callApi, logOut, refreshToken, deleteCookie} from '../utils/Apiutil'
 
 function Home(userName){
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
-    const accessToken = getCookie('userToken')
+    let accessToken = getCookie('userToken')
     var email = getCookie("userEmail")
     
     useEffect(() => {
-        const handleKeyPress = (e) => {
-          if (e.key === 'F5') {
-            e.preventDefault()
-            let jsonData = refreshToken(accessToken)
-            jsonData.then(data => {
-                console.log(data)
-                alert(`Refresh token thành công, token là :${data.data.token}`)
-            })
-        };}
-    
-        window.addEventListener('keydown', handleKeyPress);
-    
-        return () => {
-          window.removeEventListener('keydown', handleKeyPress);
-        };
+        if(!accessToken)
+            navigate('/')
       }, []);
     
-    
-    function handleCallApi(){
-        let jsonData = callApi(accessToken);
-        jsonData.then(data => {
-            if(data.success){
-                document.querySelector('#renderMessage').innerHTML = data.message;
+    const handleCallApi =  async() => {
+        let element = document.querySelector('#renderMessage')
+        if (isLoading) return;
+        setIsLoading(true)
+
+        try {
+            const callApiData = await callApi(accessToken)
+            console.log(callApiData)
+            if (callApiData.success){
+                element.innerHTML = callApiData.message
+            } else{
+                const refreshTokenData = await refreshToken(accessToken)
+                console.log(`refreshToken thành công: ${refreshTokenData.success}` )
+                if (refreshTokenData.success){
+                    document.cookie = `userToken = ${refreshTokenData.data.token}`
+                    accessToken = getCookie('userToken')
+                    handleCallApi()
+                }else{
+                    handleSignOut()
+                    alert('Phiên đăng nhập hết hạn. Mời bạn đăng nhập lại')
+                    navigate('/')
+                }    
             }
-            else{
-                document.querySelector('#renderMessage').innerHTML = '';
-                alert(data.message)
-            }
-        })
+        } catch (error) {
+            console.error("Lỗi xảy ra", error)
+        } finally{
+            setIsLoading(false)
+        }
     }
     
-    function signOutHandle(){
-        let jsonData = logOut(accessToken)
-        jsonData.then( data => {
+    const handleSignOut = async() => {
+        if (isLoading) return;
+        setIsLoading(true)
+        try {
+            const jsonData = await logOut()
+            console.log(jsonData)
             deleteAllCookies()
-            alert('Đăng xuất thành công')
-            console.log(data)
             navigate('/')
-        })
+        } catch (error) {
+            console.error("Lỗi xảy ra", error)
+        } finally {
+            setIsLoading(false)
+        }
     }
     return(
         <div className="bg-gray-300 h-screen w-full flex flex-col justify-center">
@@ -56,7 +65,7 @@ function Home(userName){
                 <p className="text-lg">Hello {email}</p>
                 <Mybtn onClick={handleCallApi}>Gọi API</Mybtn>
                 <div className="min-h-[150px] text-5xl flex justify-center items-center" id="renderMessage"></div>
-                <Mybtn onClick={signOutHandle}>LOG OUT</Mybtn>
+                <Mybtn onClick={handleSignOut}>LOG OUT</Mybtn>
             </div>
         </div>
     )

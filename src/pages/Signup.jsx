@@ -21,15 +21,13 @@ function Signup() {
             return;
         }
 
-        setIsLoading(true);
+        setIsLoading(true)
         try {
             if (signUpValid()) {
-                const jsonData = await register(email, fullName, password);
+                const jsonData = await register(email, fullName, password)
+                alert(jsonData.message)
                 if (jsonData.success) {
-                    alert(jsonData.message);
                     navigate("/");
-                } else {
-                    alert(jsonData.message);
                 }
             } else {
                 emailAlert()
@@ -38,47 +36,31 @@ function Signup() {
                 rePasswordAlert()
             }
         } catch (error) {
-            console.error("Lỗi xảy ra", error);
+            console.error("Lỗi xảy ra", error)
         } finally {
-            setIsLoading(false);
+            setIsLoading(false)
         }
-    };
+    }
     function emailAlert() {
-        if (validator.isEmail(email)) {
-            document.querySelector('#emailAlert').innerHTML = ''
-        } else {
-            document.querySelector('#emailAlert').innerHTML = 'Email không hợp lệ'
-        }
+        let element = document.querySelector('#emailAlert')
+        element.innerHTML = validator.isEmail(email) ? '': 'Email không hợp lệ'
     }
     function fullNameAlert() {
-        if (fullName) {
-            document.querySelector('#fullNamedAlert').innerHTML = ''
-        } else {
-            document.querySelector('#fullNamedAlert').innerHTML = 'Vui lòng nhập tên'
-        }
+        let element = document.querySelector('#fullNamedAlert')
+        element.innerHTML = fullName ? '': 'Vui lòng nhập tên'
     }
     function passwordAlert() {
-        if (password) {
-            document.querySelector('#passwordAlert').innerHTML = ''
-        } else {
-            document.querySelector('#passwordAlert').innerHTML = 'Vui lòng nhập mật khẩu'
-        }
+        let element = document.querySelector('#passwordAlert')
+        element.innerHTML = password ? '': 'Vui lòng nhập mật khẩu'
     }
     function rePasswordAlert() {
-        if (password === confirmPassword && confirmPassword) {
-            document.querySelector('#repasswordAlert').innerHTML = ''
-        } else {
-            document.querySelector('#repasswordAlert').innerHTML = 'Nhập lại password không đúng'
-
-        }
+        let element = document.querySelector('#repasswordAlert')
+        element.innerHTML = (password === confirmPassword && confirmPassword) ? '': 'Nhập lại password không đúng'
     }
     function signUpValid() {
-        if (validator.isEmail(email)
-            && fullName
-            && password === confirmPassword) {
-            return true;
-        }
-        return false
+        return (validator.isEmail(email)
+                && fullName
+                && password === confirmPassword) ? true : false
     }
     return (
         <div className="bg-gray-300 h-screen w-full flex flex-col justify-center"  >
