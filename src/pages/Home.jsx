@@ -8,7 +8,7 @@ function Home(userName){
     const navigate = useNavigate()
     let accessToken = getCookie('userToken')
     var email = getCookie("userEmail")
-    
+
     useEffect(() => {
         if(!accessToken)
             navigate('/')
@@ -21,7 +21,6 @@ function Home(userName){
 
         try {
             const callApiData = await callApi(accessToken)
-            console.log(callApiData)
             if (callApiData.success){
                 element.innerHTML = callApiData.message
             } else{
@@ -49,7 +48,6 @@ function Home(userName){
         setIsLoading(true)
         try {
             const jsonData = await logOut()
-            console.log(jsonData)
             deleteAllCookies()
             navigate('/')
         } catch (error) {

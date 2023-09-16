@@ -22,7 +22,6 @@ function Signin() {
         try {
             if (signInValid()) {
                 var jsonData = await logIn(email, password)
-                console.log(jsonData)
                 alert(jsonData.message)
                 if (jsonData.success) {
                     document.cookie = `userEmail = ${jsonData.data.email}`
