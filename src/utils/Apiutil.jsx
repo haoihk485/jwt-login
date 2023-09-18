@@ -36,7 +36,7 @@ export function callApi(token){
     return fetch (url, option)
         .then(response => response.json())
         .then(info => info)
-        .catch(error=>alert(error))
+        .catch(error=>console.log(error))
 }
 
 export function logOut(){
@@ -51,7 +51,7 @@ export function logOut(){
     return fetch (url, option)
         .then(response => response.json())
         .then(info=>info)
-        .catch(error=>alert(error))
+        .catch(error=>console.log(error))
 }
 
 export function refreshToken(token){
@@ -67,7 +67,7 @@ export function refreshToken(token){
     return fetch (url, option)
         .then(response => response.json())
         .then(info=>info)
-        .catch(error=>alert(error))
+        .catch(error=>console.log(error))
 }
 
 export function logIn(email, password){

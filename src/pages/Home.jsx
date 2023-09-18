@@ -3,7 +3,7 @@ import { Navigate, json, useNavigate } from "react-router-dom";
 import Mybtn from "../components/Mybtn";
 import {getCookie, deleteAllCookies, callApi, logOut, refreshToken, deleteCookie} from '../utils/Apiutil'
 
-function Home(userName){
+function Home(){
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
     let accessToken = getCookie('userToken')
@@ -21,6 +21,7 @@ function Home(userName){
 
         try {
             const callApiData = await callApi(accessToken)
+            console.log(`callApi thành công: ${callApiData.success}`)
             if (callApiData.success){
                 element.innerHTML = callApiData.message
             } else{

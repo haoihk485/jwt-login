@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import validator from "validator";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { register } from "../utils/Apiutil"
 import Mybtn from "../components/Mybtn"
@@ -62,6 +62,11 @@ function Signup() {
                 && fullName
                 && password === confirmPassword) ? true : false
     }
+    function passwordInputChange(e){
+        setPassword(e.target.value)
+        setConfirmPassword('')
+        document.querySelector('#repasswordAlert').innerHTML = ''
+    }
     return (
         <div className="bg-gray-300 h-screen w-full flex flex-col justify-center"  >
             <div className="max-w-md w-full m-auto bg-white p-8">
@@ -70,13 +75,17 @@ function Signup() {
                 <Alertp id="emailAlert"></Alertp>
                 <Myinput value={fullName} onChange={(e) => setFullName(e.target.value)} type="text" onBlur={fullNameAlert}>Full name:</Myinput>
                 <Alertp id="fullNamedAlert"></Alertp>
-                <Myinput value={password} onChange={(e) => setPassword(e.target.value)} type="password" onBlur={passwordAlert}>Password:</Myinput>
+                <Myinput value={password} onChange={passwordInputChange} type="password" onBlur={passwordAlert}>
+                        Password:</Myinput>
                 <Alertp id="passwordAlert"></Alertp>
                 <Myinput value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" onBlur={rePasswordAlert}>
                     Confirm password:</Myinput>
                 <Alertp id="repasswordAlert"></Alertp>
                 <Mybtn onClick={handleSignUp}
                     loading={isLoading}>Sign up</Mybtn>
+                <div className="text-center">
+                    <p>Have an account? <Link to="/" className="text-teal-300 font-bold">Sign in</Link></p>
+                </div>
             </div>
         </div>
     )
